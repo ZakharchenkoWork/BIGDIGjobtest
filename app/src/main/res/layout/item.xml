@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:id="@+id/mainLayout">
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="@drawable/test3"
+android:gravity="center"
+android:textSize="50sp"
+    android:orientation="vertical"
+android:id="@+id/picture"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+    android:layout_weight="1"
+        android:background="#00000000"
+        />
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:background="@drawable/item_background"
+    android:id="@+id/background"/>
+</LinearLayout>
+<LinearLayout
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:layout_marginLeft="10dp"
+android:layout_marginStart="10dp"
+android:layout_marginBottom="30dp"
+    android:id="@+id/textLayout"
+android:layout_alignBottom="@id/picture">
+
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/clipName"
+    android:background="#00000000"
+    android:id="@+id/clipName" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/singerName"
+        android:background="#00000000"
+
+        android:id="@+id/singerName" />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/viewCount"
+    android:background="#00000000"
+    android:id="@+id/viewCount"
+    />
+</LinearLayout>
+    </RelativeLayout>
