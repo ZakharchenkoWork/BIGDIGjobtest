@@ -3,9 +3,12 @@ package com.znshadows.bigdigjobtest;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * Created by MisterY on 07.10.2015.
@@ -15,7 +18,8 @@ public class CustomListView extends ListView {
 
     private OnScrollListener onScrollListener;
     private OnDetectScrollListener onDetectScrollListener;
-
+    private float oldY;
+    private long oldTime;
 
     public CustomListView(Context context) {
         super(context);
@@ -62,30 +66,13 @@ public class CustomListView extends ListView {
             }
 
             private void onDetectedListScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount) {
-                //for every visible List Item
 
-                for (int i = firstVisibleItem; i < firstVisibleItem + visibleItemCount-1; i++) {
-                    View view = absListView.getChildAt(i);
+                for (int i = 0; i < visibleItemCount; i++) {
 
-                    int top = (view == null) ? 0 : view.getTop();  //IDKWITBIW
-
-                    if (firstVisibleItem == oldFirstVisibleItem) {
-                        if (top > oldTop) {
-                            onDetectScrollListener.onUpScrolling(view);
-                        } else if (top < oldTop) {
-                            onDetectScrollListener.onDownScrolling(view);
-                        }
-                    } else {
-                        if (firstVisibleItem < oldFirstVisibleItem) {
-                            onDetectScrollListener.onUpScrolling(view);
-                        } else {
-                            onDetectScrollListener.onDownScrolling(view);
-                        }
-                    }
-
-                    oldTop = top;
-                    oldFirstVisibleItem = firstVisibleItem;
+                    View view = absListView.getChildAt(i);//for every visible List Item
+                    onDetectScrollListener.onScrolling(view);//we will handle scroll
                 }
+
             }
         });
     }
@@ -104,9 +91,37 @@ public class CustomListView extends ListView {
 
     public interface OnDetectScrollListener { //handles precise scroling
 
-        void onUpScrolling(View view);
+        void onScrolling(View view);
 
-        void onDownScrolling(View view);
+        void setSpeed(float newSpeed);
+
     }
 
+    int lastAction = MotionEvent.ACTION_UP;
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        //With first touch it is saving Coordinates
+        if(lastAction == MotionEvent.ACTION_UP && event.getAction() == MotionEvent.ACTION_DOWN) {
+
+            oldTime = System.currentTimeMillis();
+            oldY = event.getY();
+            //start timer
+
+        }
+        else if (event.getAction() == MotionEvent.ACTION_MOVE) {//when screen gets scrolled it takes speed
+
+
+            long newTime = System.currentTimeMillis();
+            float newY = event.getY();
+
+            float speed = (newY-oldY) / (newTime - oldTime);
+            oldY = newY;
+            oldTime = newTime;
+            onDetectScrollListener.setSpeed(speed/5);
+
+        }
+        lastAction = event.getAction(); //saving last Action
+        return super.onTouchEvent(event);
+    }
 }

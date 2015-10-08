@@ -4,7 +4,7 @@ import android.app.Activity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-
+import android.view.MotionEvent;
 
 
 public class MainActivity extends Activity {
@@ -37,6 +37,5 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         }
     }
-
 
 }

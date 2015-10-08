@@ -21,7 +21,7 @@ public class CustomScrollListener implements AbsListView.OnScrollListener {
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         //scale little bit all the pictures,  so soner we could scroll them
-        for (int i = 0; i < totalItemCount; i ++) {
+        for (int i = 0; i < totalItemCount; i++) {
             View child = view.getChildAt(i);
             if(child != null) {
                 LinearLayout l = (LinearLayout)child.findViewById(R.id.picture);
